@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ꮇᴀɢɪᴄ ᎰᎷ — Direct Contact</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --theme-glow-1: rgba(239, 68, 68, 0.30);
+      --theme-glow-2: rgba(220, 38, 38, 0.18);
+      --theme-glow-3: rgba(244, 63, 94, 0.16);
+      --theme-ring: rgba(248, 113, 113, 0.26);
+      --theme-inset: rgba(254, 205, 211, 0.26);
+    }
+    body {
+      font-family: 'Inter', 'Noto Sans Tamil', system-ui, -apple-system, sans-serif;
+      background-color: #090406;
+      color: #fff1f2;
+      background-image:
+        radial-gradient(circle at 50% -10%, var(--theme-glow-1), transparent 56%),
+        radial-gradient(circle at 12% 88%, var(--theme-glow-2), transparent 48%),
+        radial-gradient(circle at 88% 82%, var(--theme-glow-3), transparent 50%);
+      transition: background-color 0.35s ease, color 0.35s ease;
+    }
+    @keyframes goldPulse {
+      0%, 100% { opacity: 0.45; transform: scale(1); }
+      50% { opacity: 0.88; transform: scale(1.06); }
+    }
+    .gold-halo {
+      animation: goldPulse 3.8s ease-in-out infinite;
+    }
+    .gold-shimmer-border {
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow:
+        0 26px 80px rgba(0, 0, 0, 0.88),
+        0 0 0 1px var(--theme-ring),
+        inset 0 1px 0 var(--theme-inset);
+    }
+    @keyframes eqBounce {
+      0%, 100% { transform: scaleY(0.32); }
+      50% { transform: scaleY(1); }
+    }
+    .eq-bar {
+      transform-origin: bottom;
+      animation: eqBounce 1.15s ease-in-out infinite;
+    }
+    .eq-bar:nth-child(2) { animation-delay: 0.12s; }
+    .eq-bar:nth-child(3) { animation-delay: 0.24s; }
+    .eq-bar:nth-child(4) { animation-delay: 0.36s; }
+    .eq-bar:nth-child(5) { animation-delay: 0.18s; }
+    .eq-bar:nth-child(6) { animation-delay: 0.42s; }
+    .eq-bar:nth-child(7) { animation-delay: 0.28s; }
+    .eq-bar:nth-child(8) { animation-delay: 0.08s; }
+    .eq-bar:nth-child(9) { animation-delay: 0.32s; }
+    .eq-paused .eq-bar {
+      animation-play-state: paused;
+      transform: scaleY(0.32);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .gold-halo,
+      .eq-bar {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 sm:p-6 overflow-x-hidden relative">
+  <!-- Animated Visual Motion Background Canvas -->
+  <canvas id="bgMotionCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true"></canvas>
+
+  <div class="relative z-10 w-full flex items-center justify-center">
+    <!-- Toast Notification -->
+    <div id="toastBanner" role="status" aria-live="polite" class="pointer-events-none fixed bottom-5 left-1/2 -translate-x-1/2 z-50 opacity-0 translate-y-2 transition-all duration-200 rounded-full bg-gradient-to-r from-red-500 via-red-500 to-rose-500 text-white font-bold text-xs px-4 py-2 shadow-[0_10px_25px_rgba(239,68,68,0.4)]">
+      Copied to clipboard
+    </div>
+
+    <!-- Simple Contact Card -->
+    <main id="contactCard" class="relative w-full max-w-md rounded-3xl bg-gradient-to-b from-[#1d0a0e]/95 via-[#11080b]/95 to-[#090608]/95 border border-red-400/40 p-6 sm:p-8 text-center gold-shimmer-border space-y-5 transition-colors duration-300">
+      <!-- Top Accent Line & Theme Switcher -->
+      <div class="flex flex-col items-center gap-3">
+        <div id="topAccentLine" class="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-red-500/30 via-red-400 to-red-500/30"></div>
+        <div class="flex items-center justify-center gap-2" role="group" aria-label="Color themes">
+          <button type="button" onclick="applyColorTheme('red')" title="Crimson Red" class="theme-dot w-5 h-5 rounded-full bg-gradient-to-tr from-red-600 to-rose-300 ring-2 ring-white/80 scale-110 transition"></button>
+          <button type="button" onclick="applyColorTheme('gold')" title="Yellow Gold" class="theme-dot w-5 h-5 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-200 opacity-75 hover:opacity-100 transition"></button>
+          <button type="button" onclick="applyColorTheme('cyan')" title="Emerald Cyan" class="theme-dot w-5 h-5 rounded-full bg-gradient-to-tr from-teal-500 to-cyan-200 opacity-75 hover:opacity-100 transition"></button>
+          <button type="button" onclick="applyColorTheme('violet')" title="Royal Violet" class="theme-dot w-5 h-5 rounded-full bg-gradient-to-tr from-purple-600 to-fuchsia-300 opacity-75 hover:opacity-100 transition"></button>
+        </div>
+      </div>
+
+      <!-- Audio Wave & Signal Highlight -->
+      <div id="waveBox" class="flex flex-col items-center gap-3">
+        <div class="relative w-full rounded-2xl bg-red-500/[0.09] border border-red-400/30 px-4 py-4 overflow-hidden transition-colors duration-300">
+          <div id="waveGlow" class="gold-halo pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 w-36 h-20 rounded-full bg-red-500/25 blur-2xl"></div>
+          <div id="eqBars" class="relative flex items-center justify-center gap-1.5 h-10 mb-2" aria-hidden="true">
+            <span class="eq-bar w-1.5 h-3 rounded-full bg-red-300/80"></span>
+            <span class="eq-bar w-1.5 h-6 rounded-full bg-red-400/90"></span>
+            <span class="eq-bar w-1.5 h-9 rounded-full bg-red-400"></span>
+            <span class="eq-bar w-1.5 h-5 rounded-full bg-rose-300/85"></span>
+            <span class="eq-bar w-1.5 h-10 rounded-full bg-red-300"></span>
+            <span class="eq-bar w-1.5 h-7 rounded-full bg-red-400"></span>
+            <span class="eq-bar w-1.5 h-4 rounded-full bg-rose-300/80"></span>
+            <span class="eq-bar w-1.5 h-8 rounded-full bg-red-400"></span>
+            <span class="eq-bar w-1.5 h-3.5 rounded-full bg-rose-400/85"></span>
+          </div>
+          <p id="waveCaption" class="relative text-xs font-semibold text-red-100 tracking-wide">
+            Audio-Only • Trusted Seller • ஃபாஸ்ட் சப்போர்ட்
+          </p>
+        </div>
+      </div>
+
+      <!-- Brand Title & Bilingual Subtitle -->
+      <div class="space-y-1.5">
+        <span id="contactBadge" class="inline-flex items-center gap-1.5 rounded-full bg-red-500/15 border border-red-400/35 px-3.5 py-0.5 text-[11px] font-semibold text-red-300 shadow-[0_0_20px_rgba(239,68,68,0.16)] transition-colors duration-300">
+          Direct Telegram Contact • நேரடி தொடர்பு
+        </span>
+        <h1 id="brandTitle" class="text-3xl sm:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-red-200 via-red-400 to-rose-300 bg-clip-text text-transparent">
+          Ꮇᴀɢɪᴄ ᎰᎷ
+        </h1>
+        <p id="brandSubtitle" class="text-sm sm:text-base text-red-100/90 font-medium">
+          ஆடியோ கதைகள் • Audio Stories &amp; Trusted Seller Support
+        </p>
+        <p id="brandHandle" class="text-xs font-mono text-red-300/95 tracking-wide">
+          @SilentKingKiller
+        </p>
+      </div>
+
+      <!-- Background Song Player (Web Audio Synth - No External URL Needed) -->
+      <div id="songBox" class="rounded-2xl bg-red-500/[0.09] border border-red-400/30 px-4 py-3 flex items-center justify-between gap-2.5 text-left transition-colors duration-300">
+        <div class="min-w-0">
+          <p id="songTitle" class="text-[11px] font-semibold text-red-300 truncate">
+            Background Song • பேக்ரவுண்ட் பாட்டு
+          </p>
+          <p id="songStatusText" class="text-[11px] text-red-100/75 truncate">
+            Auto-playing melody • ஆட்டோவா ஓடுது
+          </p>
+        </div>
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button id="songMuteBtn" type="button" onclick="toggleMuteBackgroundSong()" aria-label="Toggle mute" title="Mute / Unmute" class="inline-flex items-center justify-center rounded-xl bg-red-500/15 hover:bg-red-500/25 border border-red-400/35 text-red-200 font-semibold text-xs w-9 h-9 transition">
+            <span id="songMuteIcon" aria-hidden="true">🔊</span>
+          </button>
+          <button id="songToggleBtn" type="button" onclick="toggleBackgroundSong()" aria-label="Play or pause background song" class="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-red-500 via-red-500 to-rose-500 hover:from-red-400 hover:to-rose-400 text-white font-bold text-xs px-3.5 py-2 shadow-[0_6px_18px_rgba(239,68,68,0.3)] transition">
+            <span id="songBtnIcon" aria-hidden="true">❚❚</span>
+            <span id="songBtnLabel">Pause</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Primary Telegram Contact & Copy Handle -->
+      <div class="space-y-2.5">
+        <a id="telegramCta" href="https://t.me/SilentKingKiller" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-red-500 via-red-500 to-rose-500 hover:from-red-400 hover:via-red-500 hover:to-rose-400 active:scale-[0.99] text-white font-bold text-sm sm:text-base py-3.5 px-5 shadow-[0_10px_28px_rgba(239,68,68,0.35)] transition">
+          <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+          </svg>
+          <span>Message on Telegram / டெலிகிராமில் பேச</span>
+        </a>
+
+        <button id="copyHandleBtn" type="button" onclick="copyHandle()" class="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-red-500/10 hover:bg-red-500/20 border border-red-400/35 text-red-200 font-semibold text-xs sm:text-sm py-3 px-4 transition">
+          <svg id="copyHandleIcon" class="w-4 h-4 text-red-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span id="copyHandleText">Copy Handle (@SilentKingKiller)</span>
+        </button>
+      </div>
+
+      <!-- Quick Message Copy Box -->
+      <div id="quickNoteDivider" class="pt-4 border-t border-red-400/25 text-left space-y-2">
+        <label id="quickNoteLabel" for="quickNote" class="block text-xs font-semibold text-red-200/90">
+          Quick message / விரைவு செய்தி
+        </label>
+        <div class="flex items-center gap-2">
+          <input id="quickNote" type="text" value="Hi @SilentKingKiller, I want to contact Ꮇᴀɢɪᴄ ᎰᎷ about audio stories." class="w-full rounded-xl bg-[#0b0608] border border-red-400/30 focus:outline-none px-3 py-2 text-xs text-red-50" />
+          <button id="copyNoteBtn" type="button" onclick="copyQuickNote()" class="shrink-0 rounded-xl bg-red-500/15 hover:bg-red-500/25 border border-red-400/35 px-3.5 py-2 text-xs font-semibold text-red-200 transition">
+            <span id="copyNoteText">Copy</span>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    let toastTimer = null;
+
+    const THEMES = {
+      red: {
+        name: 'Crimson Red',
+        glow1: 'rgba(239, 68, 68, 0.28)',
+        glow2: 'rgba(220, 38, 38, 0.16)',
+        glow3: 'rgba(244, 63, 94, 0.14)',
+        ring: 'rgba(248, 113, 113, 0.22)',
+        inset: 'rgba(254, 205, 211, 0.24)',
+        waveRgb: '248, 113, 113',
+        particleRgb: '251, 113, 133',
+        cardBg: 'from-[#1d0a0e]/95 via-[#11080b]/95 to-[#090608]/95',
+        cardBorder: 'border-red-400/40',
+        titleGradient: 'from-red-200 via-red-400 to-rose-300',
+        ctaGradient: 'from-red-500 via-red-500 to-rose-500 hover:from-red-400 hover:via-red-500 hover:to-rose-400 shadow-[0_10px_28px_rgba(239,68,68,0.35)]',
+        ctaText: 'text-white',
+        badgeClass: 'bg-red-500/15 border-red-400/35 text-red-300',
+        boxClass: 'bg-red-500/[0.09] border-red-400/30',
+        subText: 'text-red-100/90',
+        mutedText: 'text-red-100/75',
+        accentText: 'text-red-300',
+        secondaryBtn: 'bg-red-500/10 hover:bg-red-500/20 border-red-400/35 text-red-200',
+        smallBtn: 'bg-red-500/15 hover:bg-red-500/25 border-red-400/35 text-red-200',
+        inputClass: 'bg-[#0b0608] border-red-400/30 text-red-50'
+      },
+      gold: {
+        name: 'Yellow Gold',
+        glow1: 'rgba(250, 204, 21, 0.22)',
+        glow2: 'rgba(234, 179, 8, 0.1)',
+        glow3: 'rgba(245, 158, 11, 0.11)',
+        ring: 'rgba(250, 204, 21, 0.16)',
+        inset: 'rgba(254, 240, 138, 0.22)',
+        waveRgb: '250, 204, 21',
+        particleRgb: '250, 204, 21',
+        cardBg: 'from-[#13120c]/95 via-[#0d0e11]/95 to-[#08090c]/95',
+        cardBorder: 'border-yellow-400/35',
+        titleGradient: 'from-yellow-200 via-yellow-400 to-amber-300',
+        ctaGradient: 'from-yellow-300 via-yellow-400 to-amber-400 hover:from-yellow-200 hover:via-yellow-300 hover:to-amber-300 shadow-[0_10px_28px_rgba(250,204,21,0.3)]',
+        ctaText: 'text-stone-950',
+        badgeClass: 'bg-yellow-400/15 border-yellow-400/35 text-yellow-300',
+        boxClass: 'bg-yellow-400/[0.08] border-yellow-400/25',
+        subText: 'text-yellow-100/90',
+        mutedText: 'text-yellow-100/75',
+        accentText: 'text-yellow-300',
+        secondaryBtn: 'bg-yellow-400/10 hover:bg-yellow-400/20 border-yellow-400/35 text-yellow-200',
+        smallBtn: 'bg-yellow-400/15 hover:bg-yellow-400/25 border-yellow-400/35 text-yellow-200',
+        inputClass: 'bg-[#090a0d] border-yellow-400/25 text-yellow-50'
+      },
+      cyan: {
+        name: 'Emerald Cyan',
+        glow1: 'rgba(34, 211, 238, 0.22)',
+        glow2: 'rgba(16, 185, 129, 0.12)',
+        glow3: 'rgba(6, 182, 212, 0.12)',
+        ring: 'rgba(34, 211, 238, 0.18)',
+        inset: 'rgba(165, 243, 252, 0.22)',
+        waveRgb: '34, 211, 238',
+        particleRgb: '52, 211, 153',
+        cardBg: 'from-[#0b1516]/95 via-[#0b0f13]/95 to-[#07090c]/95',
+        cardBorder: 'border-cyan-400/35',
+        titleGradient: 'from-cyan-200 via-teal-300 to-emerald-300',
+        ctaGradient: 'from-cyan-300 via-teal-300 to-emerald-400 hover:from-cyan-200 hover:via-teal-200 hover:to-emerald-300 shadow-[0_10px_28px_rgba(34,211,238,0.28)]',
+        ctaText: 'text-stone-950',
+        badgeClass: 'bg-cyan-400/15 border-cyan-400/35 text-cyan-300',
+        boxClass: 'bg-cyan-400/[0.08] border-cyan-400/25',
+        subText: 'text-cyan-50/90',
+        mutedText: 'text-cyan-100/75',
+        accentText: 'text-cyan-300',
+        secondaryBtn: 'bg-cyan-400/10 hover:bg-cyan-400/20 border-cyan-400/35 text-cyan-200',
+        smallBtn: 'bg-cyan-400/15 hover:bg-cyan-400/25 border-cyan-400/35 text-cyan-200',
+        inputClass: 'bg-[#090a0d] border-cyan-400/25 text-cyan-50'
+      },
+      violet: {
+        name: 'Royal Violet',
+        glow1: 'rgba(192, 132, 252, 0.22)',
+        glow2: 'rgba(139, 92, 246, 0.13)',
+        glow3: 'rgba(232, 121, 249, 0.11)',
+        ring: 'rgba(192, 132, 252, 0.18)',
+        inset: 'rgba(233, 213, 255, 0.22)',
+        waveRgb: '192, 132, 252',
+        particleRgb: '232, 121, 249',
+        cardBg: 'from-[#140d1d]/95 via-[#0d0c14]/95 to-[#08080d]/95',
+        cardBorder: 'border-purple-400/35',
+        titleGradient: 'from-purple-200 via-fuchsia-300 to-violet-300',
+        ctaGradient: 'from-purple-300 via-fuchsia-300 to-violet-400 hover:from-purple-200 hover:via-fuchsia-200 hover:to-violet-300 shadow-[0_10px_28px_rgba(192,132,252,0.28)]',
+        ctaText: 'text-stone-950',
+        badgeClass: 'bg-purple-400/15 border-purple-400/35 text-purple-300',
+        boxClass: 'bg-purple-400/[0.08] border-purple-400/25',
+        subText: 'text-purple-50/90',
+        mutedText: 'text-purple-100/75',
+        accentText: 'text-purple-300',
+        secondaryBtn: 'bg-purple-400/10 hover:bg-purple-400/20 border-purple-400/35 text-purple-200',
+        smallBtn: 'bg-purple-400/15 hover:bg-purple-400/25 border-purple-400/35 text-purple-200',
+        inputClass: 'bg-[#090a0d] border-purple-400/25 text-purple-50'
+      }
+    };
+
+    let activeTheme = THEMES.red;
+
+    function applyColorTheme(themeKey) {
+      const theme = THEMES[themeKey] || THEMES.red;
+      activeTheme = theme;
+
+      document.documentElement.style.setProperty('--theme-glow-1', theme.glow1);
+      document.documentElement.style.setProperty('--theme-glow-2', theme.glow2);
+      document.documentElement.style.setProperty('--theme-glow-3', theme.glow3);
+      document.documentElement.style.setProperty('--theme-ring', theme.ring);
+      document.documentElement.style.setProperty('--theme-inset', theme.inset);
+
+      const card = document.getElementById('contactCard');
+      if (card) {
+        card.className = `relative w-full max-w-md rounded-3xl bg-gradient-to-b ${theme.cardBg} border ${theme.cardBorder} p-6 sm:p-8 text-center gold-shimmer-border space-y-5 transition-colors duration-300`;
+      }
+
+      const title = document.getElementById('brandTitle');
+      if (title) {
+        title.className = `text-3xl sm:text-4xl font-extrabold tracking-tight bg-gradient-to-r ${theme.titleGradient} bg-clip-text text-transparent`;
+      }
+
+      const badge = document.getElementById('contactBadge');
+      if (badge) {
+        badge.className = `inline-flex items-center gap-1.5 rounded-full border px-3.5 py-0.5 text-[11px] font-semibold transition-colors duration-300 ${theme.badgeClass}`;
+      }
+
+      const waveInner = document.querySelector('#waveBox > div');
+      if (waveInner) {
+        waveInner.className = `relative w-full rounded-2xl border px-4 py-4 overflow-hidden transition-colors duration-300 ${theme.boxClass}`;
+      }
+
+      const caption = document.getElementById('waveCaption');
+      if (caption) caption.className = `relative text-xs font-semibold tracking-wide ${theme.subText}`;
+
+      document.querySelectorAll('.eq-bar').forEach((bar, idx) => {
+        bar.style.backgroundColor = `rgba(${theme.waveRgb}, ${idx % 2 === 0 ? 0.92 : 0.72})`;
+      });
+
+      const subtitle = document.getElementById('brandSubtitle');
+      if (subtitle) subtitle.className = `text-sm sm:text-base font-medium ${theme.subText}`;
+
+      const handle = document.getElementById('brandHandle');
+      if (handle) handle.className = `text-xs font-mono tracking-wide ${theme.accentText}`;
+
+      const songBox = document.getElementById('songBox');
+      if (songBox) {
+        songBox.className = `rounded-2xl border px-4 py-3 flex items-center justify-between gap-3 text-left transition-colors duration-300 ${theme.boxClass}`;
+      }
+
+      const songTitle = document.getElementById('songTitle');
+      if (songTitle) songTitle.className = `text-[11px] font-semibold truncate ${theme.accentText}`;
+
+      const songStatus = document.getElementById('songStatusText');
+      if (songStatus) songStatus.className = `text-[11px] truncate ${theme.mutedText}`;
+
+      const songBtn = document.getElementById('songToggleBtn');
+      if (songBtn) {
+        songBtn.className = `shrink-0 inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r ${theme.ctaGradient} ${theme.ctaText} font-bold text-xs px-3.5 py-2 transition`;
+      }
+
+      const songMuteBtn = document.getElementById('songMuteBtn');
+      if (songMuteBtn) {
+        songMuteBtn.className = `inline-flex items-center justify-center rounded-xl border font-semibold text-xs w-9 h-9 transition ${theme.smallBtn}`;
+      }
+
+      const cta = document.getElementById('telegramCta');
+      if (cta) {
+        cta.className = `w-full inline-flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r ${theme.ctaGradient} active:scale-[0.99] ${theme.ctaText} font-bold text-sm sm:text-base py-3.5 px-5 transition`;
+      }
+
+      const copyHandleBtn = document.getElementById('copyHandleBtn');
+      if (copyHandleBtn) {
+        copyHandleBtn.className = `w-full inline-flex items-center justify-center gap-2 rounded-2xl border font-semibold text-xs sm:text-sm py-3 px-4 transition ${theme.secondaryBtn}`;
+      }
+
+      const copyHandleIcon = document.getElementById('copyHandleIcon');
+      if (copyHandleIcon) {
+        copyHandleIcon.className = `w-4 h-4 shrink-0 ${theme.accentText}`;
+      }
+
+      const divider = document.getElementById('quickNoteDivider');
+      if (divider) {
+        divider.className = `pt-4 border-t text-left space-y-2 ${theme.cardBorder}`;
+      }
+
+      const noteLabel = document.getElementById('quickNoteLabel');
+      if (noteLabel) {
+        noteLabel.className = `block text-xs font-semibold ${theme.subText}`;
+      }
+
+      const noteInput = document.getElementById('quickNote');
+      if (noteInput) {
+        noteInput.className = `w-full rounded-xl border focus:outline-none px-3 py-2 text-xs ${theme.inputClass}`;
+      }
+
+      const copyNoteBtn = document.getElementById('copyNoteBtn');
+      if (copyNoteBtn) {
+        copyNoteBtn.className = `shrink-0 rounded-xl border px-3.5 py-2 text-xs font-semibold transition ${theme.smallBtn}`;
+      }
+
+      const dots = document.querySelectorAll('.theme-dot');
+      const keys = Object.keys(THEMES);
+      dots.forEach((dot, i) => {
+        if (keys[i] === themeKey) {
+          dot.classList.add('ring-2', 'ring-white/80', 'scale-110');
+          dot.classList.remove('opacity-75');
+        } else {
+          dot.classList.remove('ring-2', 'ring-white/80', 'scale-110');
+          dot.classList.add('opacity-75');
+        }
+      });
+
+      showToast(`${theme.name} theme`);
+    }
+
+    // Animated background visual canvas (video-like motion without external video files)
+    (function initBgVisual() {
+      const canvas = document.getElementById('bgMotionCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      let width = 0;
+      let height = 0;
+      let wavePhase = 0;
+      const particles = [];
+
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        if (particles.length === 0) {
+          const count = Math.min(36, Math.max(16, Math.floor((width * height) / 38000)));
+          for (let i = 0; i < count; i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              r: 1.4 + Math.random() * 2.8,
+              vy: -(0.18 + Math.random() * 0.35),
+              vx: (Math.random() - 0.5) * 0.25,
+              alpha: 0.14 + Math.random() * 0.34
+            });
+          }
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        if (!reducedMotion) {
+          wavePhase += 0.012;
+        }
+
+        // Soft flowing wave ribbons + subtle ambient depth bands
+        for (let w = 0; w < 2; w++) {
+          ctx.beginPath();
+          const baseY = height * (w === 0 ? 0.28 : 0.72);
+          for (let x = 0; x <= width + 24; x += 24) {
+            const y =
+              baseY +
+              Math.sin(x * 0.0055 + wavePhase + w * 1.8) * 28 +
+              Math.cos(x * 0.012 - wavePhase * 0.7) * 12;
+            if (x === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.strokeStyle = w === 0 ? `rgba(${activeTheme.waveRgb}, 0.18)` : `rgba(${activeTheme.particleRgb}, 0.14)`;
+          ctx.lineWidth = w === 0 ? 2.2 : 1.6;
+          ctx.stroke();
+        }
+
+        // Drifting light bokeh particles
+        for (const p of particles) {
+          if (!reducedMotion) {
+            p.y += p.vy;
+            p.x += p.vx + Math.sin(wavePhase + p.y * 0.01) * 0.15;
+            if (p.y < -10) {
+              p.y = height + 10;
+              p.x = Math.random() * width;
+            }
+            if (p.x < -10) p.x = width + 10;
+            if (p.x > width + 10) p.x = -10;
+          }
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${activeTheme.particleRgb}, ${p.alpha})`;
+          ctx.fill();
+        }
+        if (!reducedMotion) {
+          requestAnimationFrame(draw);
+        }
+      }
+
+      resize();
+      window.addEventListener('resize', resize);
+      draw();
+      if (!reducedMotion) {
+        requestAnimationFrame(draw);
+      }
+    })();
+
+    // Auto-playing ambient background song using Web Audio API (no external audio links)
+    const bgSong = (function initBackgroundSong() {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      let ctx = null;
+      let masterGain = null;
+      let stepTimer = null;
+      let stepIndex = 0;
+      let isPlaying = false;
+      let isMuted = false;
+      let userPaused = false;
+
+      // Gentle ambient melody frequencies (D minor pentatonic / warm radio vibe)
+      const notes = [293.66, 349.23, 440.00, 523.25, 440.00, 392.00, 349.23, 329.63];
+
+      function playStep() {
+        if (!ctx || !masterGain || !isPlaying) return;
+        const now = ctx.currentTime;
+        const freq = notes[stepIndex % notes.length];
+        stepIndex += 1;
+
+        const osc = ctx.createOscillator();
+        const noteGain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now);
+
+        noteGain.gain.setValueAtTime(0.0001, now);
+        noteGain.gain.exponentialRampToValueAtTime(0.08, now + 0.08);
+        noteGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.15);
+
+        osc.connect(noteGain);
+        noteGain.connect(masterGain);
+
+        osc.start(now);
+        osc.stop(now + 1.2);
+      }
+
+      function applyGain() {
+        if (!masterGain || !ctx) return;
+        masterGain.gain.setValueAtTime(isMuted ? 0.0001 : 0.22, ctx.currentTime);
+      }
+
+      function updateUi() {
+        const eq = document.getElementById('eqBars');
+        const icon = document.getElementById('songBtnIcon');
+        const label = document.getElementById('songBtnLabel');
+        const status = document.getElementById('songStatusText');
+        const muteIcon = document.getElementById('songMuteIcon');
+        const activeSound = isPlaying && !isMuted;
+        if (eq) eq.classList.toggle('eq-paused', !activeSound);
+        if (icon) icon.textContent = isPlaying ? '❚❚' : '▶';
+        if (label) label.textContent = isPlaying ? 'Pause' : 'Play';
+        if (muteIcon) muteIcon.textContent = isMuted ? '🔇' : '🔊';
+        if (status) {
+          if (isPlaying && isMuted) {
+            status.textContent = 'Muted melody • மியூட் ஆகிருக்கு';
+          } else if (isPlaying) {
+            status.textContent = 'Playing melody • பாட்டு ஓடுது';
+          } else {
+            status.textContent = 'Tap Play for song • பாடலை இயக்க தட்டவும்';
+          }
+        }
+      }
+
+      async function start() {
+        if (!AudioCtx) return false;
+        try {
+          if (!ctx) {
+            ctx = new AudioCtx();
+            masterGain = ctx.createGain();
+            masterGain.gain.setValueAtTime(isMuted ? 0.0001 : 0.22, ctx.currentTime);
+            masterGain.connect(ctx.destination);
+          }
+          if (ctx.state === 'suspended') {
+            await ctx.resume();
+          }
+          if (ctx.state === 'running') {
+            applyGain();
+            if (!isPlaying) {
+              isPlaying = true;
+              playStep();
+              clearInterval(stepTimer);
+              stepTimer = setInterval(playStep, 1100);
+            }
+            updateUi();
+            return true;
+          }
+        } catch (err) {
+          // Autoplay may require a user gesture first
+        }
+        updateUi();
+        return false;
+      }
+
+      function pause() {
+        userPaused = true;
+        isPlaying = false;
+        clearInterval(stepTimer);
+        stepTimer = null;
+        updateUi();
+      }
+
+      function toggle() {
+        if (isPlaying) {
+          pause();
+        } else {
+          userPaused = false;
+          start();
+        }
+      }
+
+      function toggleMute() {
+        isMuted = !isMuted;
+        applyGain();
+        updateUi();
+        showToast(isMuted ? 'Sound muted • சத்தம் நிறுத்தப்பட்டது' : 'Sound on • சத்தம் இயக்கப்பட்டது');
+      }
+
+      function tryAutoplay() {
+        if (userPaused) return;
+        start().then((started) => {
+          if (!started && !userPaused) {
+            const unlock = () => {
+              if (!userPaused) {
+                start();
+              }
+              window.removeEventListener('pointerdown', unlock);
+              window.removeEventListener('keydown', unlock);
+              window.removeEventListener('touchstart', unlock);
+            };
+            window.addEventListener('pointerdown', unlock, { once: true });
+            window.addEventListener('keydown', unlock, { once: true });
+            window.addEventListener('touchstart', unlock, { once: true });
+          }
+        });
+      }
+
+      window.addEventListener('DOMContentLoaded', tryAutoplay);
+      setTimeout(tryAutoplay, 120);
+
+      return { toggle, toggleMute };
+    })();
+
+    function toggleBackgroundSong() {
+      bgSong.toggle();
+    }
+
+    function toggleMuteBackgroundSong() {
+      bgSong.toggleMute();
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toastBanner');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.remove('opacity-0', 'translate-y-2');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', 'translate-y-2');
+      }, 2000);
+    }
+
+    function copyTextFallback(text, onSuccess) {
+      try {
+        const temp = document.createElement('textarea');
+        temp.value = text;
+        temp.setAttribute('readonly', '');
+        temp.style.position = 'fixed';
+        temp.style.opacity = '0';
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        onSuccess();
+      } catch (err) {
+        showToast('Copy failed • காப்பி செய்ய முடியவில்லை');
+      }
+    }
+
+    function copyHandle() {
+      const label = document.getElementById('copyHandleText');
+      copyTextFallback('@SilentKingKiller', () => {
+        if (label) {
+          label.textContent = 'Copied @SilentKingKiller • காப்பி ஆனது';
+          setTimeout(() => {
+            label.textContent = 'Copy Handle (@SilentKingKiller)';
+          }, 2000);
+        }
+        showToast('Copied @SilentKingKiller');
+      });
+    }
+
+    function copyQuickNote() {
+      const input = document.getElementById('quickNote');
+      const label = document.getElementById('copyNoteText');
+      if (!input) return;
+      copyTextFallback(input.value, () => {
+        if (label) {
+          label.textContent = 'Copied';
+          setTimeout(() => {
+            label.textContent = 'Copy';
+          }, 2000);
+        }
+        showToast('Message copied • செய்தி காப்பி ஆனது');
+      });
+    }
+  </script>
+</body>
+</html>
